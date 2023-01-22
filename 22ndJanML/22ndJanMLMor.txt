@@ -1,0 +1,343 @@
+Agenda :
+
+1. Types of Machine Learning
+	Supervised Learning
+	Unsupervised Learning
+	Self Supervised Learning
+	Reinforcement Learning - ChatGPT
+2. Supervised Learning Flow
+3. Regression Analysis
+
+
+
+
+
+1. Supervised vs Unsupervised Learning
+   ___________________________________
+
+	In a supervised learning the objective is to learn under some kind of
+supervision or you can consider this as a guided learning. In the other case there is no guidance on learning and hence we dont have a clear solution to it. 
+
+
+Lets take an example to understand this. I always take apples vs oranges classifier. 
+
+	Extract some features, characteristics or properties of apples and oranges which are common. 
+
+
+	Shape | Color | Taste ........  |  Fruit
+
+	  -       -       -   ......... |  Apple
+ 	  -       -       -   ......... |  Orange
+          -       -       -   ......... |  Apple
+
+
+If you have to teach your younger sibling the difference between apples and oranges what would you do? You would ideally share real apples and oranges and explicitly mention that this is an apple and this is an orange. Now the younger sibling will automatically learn the important features from it. He will learn that anything which is red in color will be an apple. Anything which is sweet in taste will be apple etc 
+	And once he learns these features then you show him any unseen apple or orange he will be able to guess it from the features he has learnt. Correct ?
+
+Any learning happening under a supervision of labels is supervised learning. 
+
+
+Then what is unsupervised learning ? Or what will a person learn from an unlabelled data. Machines also do unsupervised learning. For example,
+
+	Lets say I run an organization. Now I have to give bonus to my employees. Before giving bonus I need to decide the percentage to be given to each employee. 
+
+	I will provide the entire data to my machine and ask it to group the employees based on their performance, behaviour, vision etc. I will also tell the machine that I need some 5 different categories of employee. Now the machine will analyze the data and based on selected properties it will assign a category id to each employee
+
+	Emp1 -------  Category2
+	Emp2 ------- Category3
+	.
+	.
+	.
+	.
+	.
+
+Now once we have this data we can then assign a bonus percentage to each employee. How ? We can see that category1 is that category where you have hard working smart visionary people. So you provide them with 100% bonus
+Again you will observe that category2 has those people who are loyal, honest but they are a little lazy in terms of delivery. They fall in category 2 and you will assign 80% bonus to category 2. Without any labels given I could still manage to arrange data into groups. This kind of learning where there are no labels is called as unsupervised learning.  
+
+
+
+To summarize the basic difference between a supervised learning and unsupervised learning is that the data should contain labels for supervised learning. If it doesnt contain labels then you can only do unsupervised learning. 
+
+
+Data can be considered as two major parts
+
+1. Feature Set
+	Attributes, Estimators, Predictors, Independent variable, inputs, X
+
+2. Label
+	Target, Dependent variable, output, response, y
+
+	Data :  X | y
+
+
+
+Example : Sentiment Analysis 
+
+Features : The words in the tweet are features
+Target : the nature of the sentence (sentiment)
+
+
+Example : Voice classification
+
+Features : Acoustic properties of the voice (Pitch, Rhythm, Melody, Loudness etc)
+Target : animals
+
+
+Example : Weather prediction
+
+Features : Temp today, humidity today, precipitation 
+Target : Weather 
+
+
+
+Supervised Learning
+___________________
+
+	We have seen above that under supervised learning you will have labels. Now based on these labels we can further divide supervised learning into two types. If the label is discrete then it is called as classification
+       IF the label is continuous then it is called as regression
+
+
+Lets take an example of age group : child, teen, adult, old- Discrete
+			Age : 30.5 years - Continuous
+
+Example :
+
+	Feature : shape, color, taste, price
+	Target : Fruit ? (Apple/Orange) 
+
+	now you know that the type of fruit is to be predicted over here.
+	The type of fruit usually falls under discrete data. Hence this is a
+	classification problem
+
+Example :
+
+	Features : Carpet Area, No of bedrooms, Balcony area, Tier City etc
+	Target : Price of a house
+
+	You know here that the price of a house can never be discrete, Its a 
+	continuous value. Hence this problem will be considered under regression
+
+
+Example :
+
+	From the X-rays I have to predict whether the person has COVID or not ?
+
+	What do you think ?? Since the output is discrete hence it is
+	classification problem
+
+Example : From the same X-rays I have to predict the severity of COVID 
+
+	If I tell it in terms of like this very, less, moderate then it is 
+	classification
+
+	But if I quantify it and say it is 99% or 98.3% .... then it becomes 
+	regression 
+
+Example : Predicting the delivery time of an ecommerce purchase
+	  The day of arrival is imp -> classification
+
+	 
+Example : Predicting the delivery time of a food based app
+	 The time of delivery is imp -> regression
+
+
+Example : Self driving car
+	  You see a vehicle in front of you and you want your car to
+	  apply a brake. 
+	  What do you think ?  Its a regression problem
+
+Example : Steering a wheel ? 
+	  Angle of rotation - regression
+
+
+Example : Predicting the next word in a sequence
+	  Although it is huge, 1B words but its still discrete
+	  Hence its a classification problem
+
+
+I identified it as a supervised learning problem and under supervised learning I also identified it as classification problem. Now what next ?
+
+
+This is a very very very important topic - Supervised Learning Flow
+
+
+Data - Features + Target
+
+1. Load the data
+2. Shuffle the data
+3. Split the data - Features + Target
+	
+	Train Data - Train Features + Train Target (75%) 
+	Test Data - Test Features + Test Target    (25%) 
+
+4. Fit a model on Train Features and Train Target - Predictive ability
+5. Evaluate your model on Test Data. How ?
+	You will provide only the Test Features to the data
+	and ask it to predict. Whatever it predicts you then
+	compare it to Test_Target. If they match satisfactorily then
+	you say the model's learning has been perfect
+	Otherwise retrain the model
+6. Infer from the model.
+	Since you claim that your model has learnt to 
+	distinguish between a cat and a dog (example) hence now we 
+	can actually provide a picture of a cat and a dog and see whether
+	it is able to predict it or not. 
+
+
+
+Task :
+
+1. Reproduce the same code in jupyter notebook
+2. Remove the random state and rerun the notebook 3 times and see the
+	change in accuracies 
+3. Change the train_size too to values around it and see its consequence
+	on accuracy 
+4. Add few more values (atleast 5) to your data and rerun the model
+	to see any change in accuracies
+
+
+-------------------------------------------------------------------------------
+
+Regression
+__________
+
+
+1. Linear Regression
+   __________________
+
+	Objective : Find the best fit line which explains the 
+		relationship between the input variable (Feature)
+		and output variable (Target)
+
+		Mathematically, we can say find the best values of 
+		m and c in the equation
+		
+			y = m.X + c 
+
+		where y -> target and X -> feature
+		      m -> slope and c -> intercept
+
+	
+		How will you know that which is the best value ?
+		This is where the error metric comes into play
+		For now, we will use a simple error metric called as
+		sum squared errors/residuals
+
+		SSE = Summation over all observations(Actual - Pred)^2
+
+		This SSE should be minimum for the chosen m and c.
+		For that chosen m and c we will say they are the best set of
+		values. 
+
+
+	Mathematics :
+
+		y = F(X)
+		Since its a linear function hence I can write
+
+		y = B1.X + B0    where B1 is a coeff and B0 is constant
+		
+		y_pred = B1^.X + B0^ (B1^ - chosen coeff, B0^ - chosen 							constant)
+
+		SSR = (y - y_pred)^2
+		SSR = (y - B1^.X - B0^)^2
+
+		Now you know that we want to minimize SSR. Hence we 
+		differentiate SSR w.r.t B1 and B0 which we call as partial
+		differentiation
+
+		And we equate it to zero. This will give us two equations
+		When you solve for these two equations you will get the 
+		values of B0 and B1 such that the error is least. 
+
+		This is called as the least square method. 
+
+Agenda :
+
+1. Continue on Gradient Descent
+2. Multiple Linear Regression
+3. Polynomial Regression
+4. Regularization
+5. Ridge, Lasso and Elastic Net Regression
+6. Error Metrics
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	  
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
