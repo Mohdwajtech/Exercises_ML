@@ -1,0 +1,275 @@
+Agenda :
+
+1. Challenges with prediction
+2. Regularized Linear Models
+3. Logistic Regression
+4. Classification Metrics
+5. Feature Engineering
+
+
+Lets say there is a high school examination. We ask a 5th grade student to attempt it. Obviously he will fail. We then ask the 8th grade student. He will fail but he will do better than the 5th grade. We then ask the 12th grade student and he should do best compared to the other two. We ask a graduate student to attempt it but we observe that he performs worst than the 12th grade student and a post doctorate perfroms worst than 5th grade student on 12th grade examination
+
+
+Challenges
+__________
+
+	
+	In Simple Linear Regression, we assumed that the data is linearly related to the target and hence can be modelled with linear models such as linear regression. But in some cases we find data is more complex than a straight line. What do we do in such cases? If we force to fit a straight line you would observe that the line will never be a good fit to the distribution and hence you find huge errors or less r-squared value. Surprisingly, we can use linear model by adding a simple step of polyomial feature transformation. Add powers of each feature as new features, then train a linear model on this extended set of features. This is called as polynomial regression. 
+
+
+The Problem
+____________
+
+	If you perform a higher degree polynomial regression you are likely fitting the train data much better than with plain regression. But this high degree polynomial comes with its own cost. The curve may fit the training data very precisely but it may start missing the estimation on test data.
+And this scenario is called as overfitting. The model overfits the data
+
+
+Underfitting :
+
+	When the model is unable to fit to the train data and the train error is huge then we say that the model is underfitting. And this happens due to something called as high bias(ignorance) and low variance(sensitive). 
+
+
+Overfitting :
+
+	When the model is able to fit the train data perfectly and the train error is very small but the test error is huge which is indicating that the model is unable to predict on unseen data then we say the model has overfitted the data. And this happens due to something called as low bias(ignorant) and high variance(sensitive)
+
+
+Best Fit :
+
+	So Ideally you see that smart people are not very sensitive and not very ignorant. 
+	So similarly smart models should not be having high bias and even low bias. So hence a model with moderate bias and moderate variance is a good model and such a model is called as best fit model and the indication of such a model is through the train error and test error falling in the same range. 
+
+
+Bias : 
+
+	Being ignorant ( wrong assumption )
+	The underfit model is an example of a model having high bias and low variance
+
+
+Variance : 
+
+	Being sensitive ( you answer one question correctly, he will start thinkin
+			you are the most intelligent person on earth,
+			and the next question you answer incorrectly, he will start thinking
+			you are the person having no knowledge at all )
+
+	The overfit model is an example of a model having high variance. 
+	Any change in the data will change the model's estimates. 
+
+Target : Moderate variance and moderate bias
+
+
+
+Regularization :
+________________
+
+	Regularization is the solution to overfitting. But wait what is the solution to underfitting ? The solution to underfitting is to train more. Or improve the data. 
+
+
+	Regularization basically modifies the loss function and ensures that overfitting is reduced. 
+
+	If you remember in the gradient descent algorithm we used MSE as the loss function. 
+
+	L = MSE
+
+	But Regularization introduces a term in your loss function. 
+
+	L = MSE + lambda.Summation(beta^2)
+
+	Here beta is nothing but the learnable coefficients of your model.
+	Remember what we assumed that we should allow the model to make
+	certain small mistakes. 
+
+How is this stopping the overfitting ?
+
+We saw that overfitting happened due to high variance. What is high variance? It is nothing but model's sensitivity to any updates in the training data. Correct? This is causing overfitting. So the solution should be to avoid these updates. The model should learn to ignore. How can this be possible? When we say that the model should not be sensitive we are basically trying to say that the model should not update its parameters (B0 and B1) for any change in data. Correct ? But wait who is making the change ? The gradient descent makes the changes. And the gradient descent does so by the inputs from your loss function. Now if somehow I can regulate the loss function then I can regulate the updates. Hence the regularization term is added to the loss function to regulate it.
+
+	The lambda in the regularization term is to control the strength of 
+	regularization. The more the value of lambda the more strict the 
+	regularization. What is optimal value ? That you will have to find 
+	yourself by trying different values for your data. 
+
+
+Lets say your linear regression equation is this
+
+
+	y = B0 + B1.X1 + B2.X2 + B3.X3
+
+1. In Ridge Regression the Loss function will be like this
+
+
+	LF = MSE + lambda. (B1^2 + B2^2 + B3^2)
+	Ridge Regression also reduces the problem of multicollinearity by
+	reducing the coefficients of redundant variables. 
+
+	For Example in case of price of a house
+
+	if price of a house = f(No of bedrooms, balcony area, 
+				no of floors, no of attached bathrooms)
+			   = B1.Bedrooms + B2.Balcony + B3.Floors + B4.bathrooms + B5
+	LF = MSE + lambda.(B1^2 + B2^2 + B3^2 + B4^2)
+
+	You know that no of bedrooms directly proportional to bathrooms. Hence multicollinearity 	exists. We would want to remove it. The Ridge regression will do that automatically by
+	reducing the coeff (either B1 or B4 close to zero)
+	
+2. In Lasso Regression the Loss function will be like this
+
+
+	LF = MSE + lambda. (abs(B1) + abs(B2)+ abs(B3))
+
+	For Example in case of price of a house
+
+	if price of a house = f(No of bedrooms, balcony area, 
+				no of floors)
+			   = B1.Bedrooms + B2.Balcony + B3.Floors + B4
+	LF = MSE + lambda.(abs(B1) + abs(B2)+ abs(B3))
+
+	This helps in feature selection by dropping the coeefficients to zero for variables which are not responsible for predicting the target variable. 
+
+	Lets say for predicting the price of house if I have features like
+no of bedrooms, no of balconies, stock price of tesla then you know that the
+stock price is an irrelevant variable hence the model will automatically
+push the coefficient of stock price of tesla to zero indicating that its an
+irrelevant variable and the remaining will be non zero indicating they are 
+relevant. 
+
+	The max_iter defines how many times you want the variables to be updated.
+If you have different values of iterations then obviously you will have different values of coefficients. 
+
+This concludes the regression methods.
+
+
+3. Elastic Net
+
+	Hybrid of Ridge and Lasso
+
+	LF = MSE + lambda1. (B1^2 + B2^2 + B3^2) + lambda2. (abs(B1) + abs(B2)+ abs(B3)) 
+
+	Eg :
+
+	if price of a house = f(No of bedrooms, balcony area, 
+				no of floors)
+			   = B1.Bedrooms + B2.Balcony + B3.Floors + B4
+	LF = MSE + lambda1.(abs(B1) + abs(B2)+ abs(B3)) + lambda2. (B1^2 + B2^2 + B3^2)
+	
+Feature Engineering
+___________________
+
+	Types of data - Quantitative (numeric - salary, experience)
+		      - Qualitative (gender, profession, blood group)
+
+
+	We cannot just give qualitative data as it is to the model.
+	We need to convert them to numerics. 
+
+	How ?
+
+	Within Qualitative there are two types :
+
+	1. Nominal Data - > Has no order
+	
+		For example : Blood Groups
+				States
+				Gender
+
+	
+		
+	2. Ordinal Data -> Have a certain order
+			
+		For example : Designations
+				Sentiments 
+				Grades
+
+Agenda :
+
+1. Classification - Logistic Regression
+2. Classification metrics
+3. Feature Engineering - PCA
+
+
+Classification 
+______________
+
+	Your target variable is discrete. 
+
+Logistic Regression
+___________________
+
+
+		
+	Example : Chances of getting a job ---> y
+		   No of hours you study  ----> x
+
+	Example : Chances of you getting a loan  ----> y
+		  Credit history ----> x
+
+	Example : Chances of rainfall ----> y
+		  Temperature -----> x
+
+	y = logistic function(x)
+	  = sigmoid (X)
+
+	y = 1/(1+e^(-W.T*X))
+
+	Within this formula : 
+
+		y -> Target
+		x -> Feature
+		W - > Learnable parameter (same as B in Linear Regression)
+
+
+	From the formula we realize that the function can take any range of input values
+	but the output will be always between 0 and 1. Hence we infer the output of 
+	the sigmoid function as probabilities.
+
+	We say that what is the prob of a person getting a job given he has 4 years of experience?
+
+	If the prob > 0.5 means he will get a job
+	If the prob <=0.5 means he wont get a job
+
+	Now if you observe that the output is between 0 and 1. How many values are between 0 and 1?
+	There are unlimited values, hence the name is regression but we use these unlimited
+	values and infer a discrete output hence the problem solved is a classification
+	problem. 
+
+	Example :	
+		chances of getting a job = 1/(1+e^(-W.T*No of hours study))
+
+	You need to find the best W value such that the error is least. 
+
+	You might argue that how is this classfication? Because in the
+	output I am getting probabilities which is actually continuous.
+	Here is the catch.
+
+
+	Since the output is continuous we say its a regression algorithm but
+	since the inference part is like this
+
+
+	if predicted prob (y^) >= 0.5 ; then prediction = 1
+	   else 		< 0.5 ; then prediction = 0 
+
+	The way we interpret or infer is classification. 
+
+
+	Thats why the name is regression but the purpose which it solves is
+	classification. 
+
+
+
+	The Loss function ???
+	______________________
+
+		Do we use MSE over here ?
+		The answer is we can use but we dont. 
+		why ? because the output is in terms of yes or no
+		and your prediction is coming as probabilities. 
+		So we may need some transformation from probabilities
+		to discrete output. Hence we avoid direct use of MSE.
+
+	Log Loss :
+	__________
+	
+	if actual(y) = 1 ; then L = -log(p^)
+	   actual(y) = 0; then  L = -log(1-p^)
+
